@@ -38,7 +38,13 @@ prompt_pztrn_setup () {
 
     [[ -n "$WINDOW" ]] && p_win="$pc['\(']%F{$pcc[4]}$WINDOW$pc['\)']"
 
-    p_userpwd="$pc['\[']%F{$pcc[5]}User:%F{$pcc[3]} %n$pc['\]']$pc['\[']%F{$pcc[5]}Host:%F{$pcc[3]} %M$pc['\]']"
+    if [[ $USER == "root" ]]; then
+        pc['usercolor']="%F{$pcc[1]}"
+    else
+        pc['usercolor']="%F{$pcc[3]}"
+    fi
+
+    p_userpwd="$pc['\[']%F{$pcc[5]}User:$pc['usercolor'] %n$pc['\]']$pc['\[']%F{$pcc[5]}Host:%F{$pcc[3]} %M$pc['\]']"
 
     p_shlvlhist="$pc['\[']%F{$pcc[3]}%B%h%b$pc['\]']"
     p_rc="%(?..[%?%1v] )"
