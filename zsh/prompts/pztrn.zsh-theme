@@ -4,75 +4,65 @@ autoload -U add-zsh-hook
 prompt_pztrn_help () {
     cat <<'EOF'
 
-    prompt pztrn [<color1> [<color2> [<color3> [<color4> [<color5>]]]]]
+    prompt pztrn
 
-    defaults are red, cyan, green, yellow, and white, respectively.
+    There is no colors to define
 
 EOF
 }
 
 prompt_pztrn_setup () {
-    local -a pcc
-    local -A pc
-    local p_date p_tty p_plat p_ver p_userpwd p_apm p_shlvlhist p_rc p_end p_win
+    local -A vars
 
-    autoload -Uz vcs_info
+    local p_date p_tty p_plat p_userpwd p_apm p_shlvlhist p_rc p_end p_win p_vcs
 
-    pcc[1]=${1:-${${SSH_CLIENT+'yellow'}:-'red'}}
-    pcc[2]=${2:-'cyan'}
-    pcc[3]=${3:-'green'}
-    pcc[4]=${4:-'yellow'}
-    pcc[5]=${5:-'white'}
+    autoload -U colors
+    colors
 
-    pc['\[']="%F{$pcc[1]}["
-    pc['\]']="%F{$pcc[1]}]"
-    pc['<']="%F{$pcc[1]}<"
-    pc['>']="%F{$pcc[1]}>"
-    pc['\(']="%F{$pcc[1]}("
-    pc['\)']="%F{$pcc[1]})"
-
-    p_date="$pc['\[']%F{$pcc[2]}%D{%a %y/%m/%d %R %Z}$pc['\]']"
-    p_tty="$pc['\[']%F{$pcc[3]}%l$pc['\]']"
-    p_plat="$pc['\[']%F{$pcc[2]}$(uname -r)$pc['\]']"
-    p_ver="$pc['\[']%F{$pcc[2]}${ZSH_VERSION}$pc['\]']"
-
-    [[ -n "$WINDOW" ]] && p_win="$pc['\(']%F{$pcc[4]}$WINDOW$pc['\)']"
-
-    if [[ $USER == "root" ]]; then
-        pc['usercolor']="%F{$pcc[1]}"
+    # Session-dependend colorizing.
+    # Local will be black, remote - yellow.
+    if [[ -n $SSH_TTY ]]; then
+        vars['brackets_start']="%{$fg[yellow]%}[%{$reset_color%}"
+        vars['brackets_end']="%{$fg[yellow]%}]%{$reset_color%}"
+        vars['console']="%{$vars['brackets_start']%}SSH%{$vars['brackets_end']%}"
+        vars['default_color']="%{$fg[cyan]%}"
     else
-        pc['usercolor']="%F{$pcc[3]}"
+        vars['brackets_start']="%{$fg[black]%}[%{$reset_color%}"
+        vars['brackets_end']="%{$fg[black]%}]%{$reset_color%}"
+        vars['console']=""
+        vars['default_color']="%{$fg[green]%}"
     fi
 
-    p_userpwd="$pc['\[']%F{$pcc[5]}User:$pc['usercolor'] %n$pc['\]']$pc['\[']%F{$pcc[5]}Host:%F{$pcc[3]} %M$pc['\]']"
+    p_date="$vars['brackets_start']$vars['default_color']%D{%a %Y/%m/%d %R}$vars['brackets_end']"
+    p_tty="$vars['brackets_start']$vars['default_color']%l$vars['brackets_end']"
+    p_plat="$vars['brackets_start']$vars['default_color']$(uname -r)$vars['brackets_end']"
 
-    p_shlvlhist="$pc['\[']%F{$pcc[3]}%B%h%b$pc['\]']"
-    p_rc="%(?..[%?%1v] )"
-    p_end="%f%B%#%b "
-    p_path="$pc['\[']%F{$pcc[4]} %d $pc['\]']"
+    [[ -n "$WINDOW" ]] && p_win="$WINDOW"
 
-    zle_highlight[(r)default:*]=default:$pcc[2]
+    if [[ $USER == "root" ]]; then
+        vars['usercolor']="%{$fg[red]%}"
+    else
+        vars['usercolor']="%{$fg[blue]%}"
+    fi
 
-    prompt="$p_date$p_tty$p_plat$p_ver$p_userpwd$p_shlvlhist
-$p_path $p_end"
+    p_userpwd="$vars['brackets_start']$vars['usercolor']%n$reset_color@%{$fg[magenta]%}%M$vars['brackets_end']"
+
+    p_shlvlhist="$vars['brackets_start']$vars['default_color']%B%h%b$vars['brackets_end']"
+    p_rc="%(?..$vars['brackets_start']$fg[red]%?%1v$vars['brackets_end'])"
+    p_end="%# "
+
+    p_path="$vars['brackets_start']$vars['default_color'] %d $p_path$vars['brackets_end']"
+
+    p_vcs="${VCS}"
+
+    PROMPT="$p_date$p_tty$p_plat$p_userpwd$p_shlvlhist$p_rc
+$vars['console']$p_path $p_end"
     PS2='%(4_.\.)%3_> %E'
 
-    add-zsh-hook precmd prompt_pztrn_precmd
-}
+    watch=all
+    logcheck=10
+    WATCHFMT="$vars['brackets_start']$vars['default_color']%n$reset_color from $fg[magenta]%M$reset_color has $vars['default_color']%a$reset_color (%l) at %T %W$vars['brackets_end']"
 
-prompt_pztrn_precmd () {
-    setopt noxtrace noksharrays localoptions
-    local exitstatus=$?
-    local git_dir git_ref
-
-    psvar=()
-    [[ $exitstatus -ge 128 ]] && psvar[1]=" $signals[$exitstatus-127]" ||
-	psvar[1]=""
-
-    [[ -o interactive ]] && jobs -l
-
-    vcs_info
-    [[ -n $vcs_info_msg_0_ ]] && psvar[2]="$vcs_info_msg_0_" || psvar[2]="NO"
 }
 
 prompt_pztrn_setup "$@"
