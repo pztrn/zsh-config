@@ -49,19 +49,17 @@ prompt_pztrn_setup () {
 
     p_shlvlhist="$vars['brackets_start']$vars['default_color']%B%h%b$vars['brackets_end']"
     p_rc="%(?..$vars['brackets_start']$fg[red]%?%1v$vars['brackets_end'])"
-    p_end="%# "
+    p_end="$vars['usercolor']%#%{$reset_color%} "
 
-    p_path="$vars['brackets_start']$vars['default_color'] %d $p_path$vars['brackets_end']"
-
-    p_vcs="${VCS}"
+    p_path="$vars['brackets_start']$vars['default_color'] %d $vars['brackets_end']"
 
     PROMPT="$p_date$p_tty$p_plat$p_userpwd$p_shlvlhist$p_rc
 $vars['console']$p_path $p_end"
     PS2='%(4_.\.)%3_> %E'
 
     watch=all
-    logcheck=10
-    WATCHFMT="$vars['brackets_start']$vars['default_color']%n$reset_color from $fg[magenta]%M$reset_color has $vars['default_color']%a$reset_color (%l) at %T %W$vars['brackets_end']"
+    logcheck=5
+    WATCHFMT="$vars['default_color']%n$reset_color from $fg[magenta]%M$reset_color has $vars['default_color']%a$reset_color (%l) at %T %W"
 
 }
 
