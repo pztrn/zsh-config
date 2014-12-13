@@ -14,7 +14,7 @@ EOF
 prompt_pztrn_setup () {
     local -A vars
 
-    local p_date p_tty p_plat p_userpwd p_apm p_shlvlhist p_rc p_end p_win p_vcs
+    local p_date p_tty p_plat p_userpwd p_shlvlhist p_rc p_end p_win p_path
 
     autoload -U colors
     colors
@@ -24,7 +24,7 @@ prompt_pztrn_setup () {
     if [[ -n $SSH_TTY ]]; then
         vars['brackets_start']="%{$fg[yellow]%}[%{$reset_color%}"
         vars['brackets_end']="%{$fg[yellow]%}]%{$reset_color%}"
-        vars['console']="%{$vars['brackets_start']%}SSH%{$vars['brackets_end']%}"
+        vars['console']="$vars['brackets_start']SSH$vars['brackets_end']"
         vars['default_color']="%{$fg[cyan]%}"
     else
         vars['brackets_start']="%{$fg[black]%}[%{$reset_color%}"
