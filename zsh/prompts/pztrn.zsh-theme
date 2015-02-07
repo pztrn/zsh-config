@@ -55,6 +55,8 @@ prompt_pztrn_setup () {
 
     PROMPT="$p_date$p_tty$p_plat$p_userpwd$p_shlvlhist$p_rc
 $vars['console']$p_path $p_end"
+    RPROMPT="$p_date$p_tty$p_plat$p_userpwd$p_shlvlhist$p_rc
+$vars['console']$p_path $p_end"
     PS2='%(4_.\.)%3_> %E'
 
     watch=all
