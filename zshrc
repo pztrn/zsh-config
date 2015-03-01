@@ -18,6 +18,11 @@ PROMPT_THEME="pztrn"
 # nVidia users with proprietary drivers - sorry, you can't use it.
 USE_FBTERM=0
 
+# PyENV in use?
+USE_PYENV=0
+# Path to PyENV.
+PYENV_PATH="/data/.pyenv"
+
 #####################################################################
 # INITIALIZATION
 # --------------
@@ -46,7 +51,7 @@ if [ $CONFIG_FOUND -eq 1 ]; then
         source ${CONFIG_PATH}/zsh/${config_file}
     done
 else
-    echo "Failed to load configuration."
+    error "Failed to load configuration."
 fi
 
 set -B
