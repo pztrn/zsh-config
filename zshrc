@@ -16,7 +16,7 @@ PROMPT_THEME="pztrn"
 
 # FBTerm - should we use it?
 # nVidia users with proprietary drivers - sorry, you can't use it.
-USE_FBTERM=1
+USE_FBTERM=0
 
 #####################################################################
 # INITIALIZATION

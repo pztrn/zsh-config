@@ -1,7 +1,18 @@
 # Launch fbterm on TTY login
 
-# But first some pre-checks. nVidia proprietary drivers will not allow
-# us to use it, so we should disable this.
+# We should not use it on any system except linux.
+if [[ "${OS}" != "Linux" ]]; then
+    return
+fi
+
+# We should skip this file if no fbterm is installed.
+FBTERM=`whereis fmterm | cut -d ":" -f 2`
+if [[ "${FBTERM/fbterm}" == "${FBTERM}" ]]; then
+    return
+fi
+
+# nVidia proprietary drivers will not allow us to use it, so we
+# should disable this.
 
 NVIDIA_POWERED=0
 lsmod | grep nvidia &> /dev/null

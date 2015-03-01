@@ -39,7 +39,7 @@ prompt_pztrn_setup () {
 
     [[ -n "$WINDOW" ]] && p_win="$WINDOW"
 
-    if [[ $USER == "root" ]]; then
+    if [[ "$USER" == "root" ]]; then
         vars['usercolor']="%{$fg[red]%}"
     else
         vars['usercolor']="%{$fg[blue]%}"
