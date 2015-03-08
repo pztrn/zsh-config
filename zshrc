@@ -4,26 +4,6 @@
 #. /etc/profile
 
 #####################################################################
-# CONFIGURATION
-# -------------
-# You should set these variables :)
-#####################################################################
-# The very important thing - debug.
-# Should we enable debug output?
-DEBUG=0
-# Prompt configuration
-PROMPT_THEME="pztrn"
-
-# FBTerm - should we use it?
-# nVidia users with proprietary drivers - sorry, you can't use it.
-USE_FBTERM=0
-
-# PyENV in use?
-USE_PYENV=0
-# Path to PyENV.
-PYENV_PATH="/data/.pyenv"
-
-#####################################################################
 # INITIALIZATION
 # --------------
 # Here goes initialization thing.

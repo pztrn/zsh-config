@@ -1,3 +1,6 @@
+# Some great default aliases.
+# Custom aliases should go to ${HOME}/.zsh-config.d/10-aliases.conf
+# (or other file).
 alias screen="TERM=xterm screen"
 
 # Other
