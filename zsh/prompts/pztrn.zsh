@@ -65,4 +65,4 @@ $vars['console']$p_path $p_end"
 
 }
 
-prompt_pztrn_setup "$@"
+prompt_pztrn_setup

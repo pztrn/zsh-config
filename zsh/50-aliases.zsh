@@ -6,3 +6,13 @@ alias screen="TERM=xterm screen"
 # Other
 alias clocksync="sudo ntpdate 0.pool.ntp.org"
 alias got="git"
+
+for item in `ls ${CONFIG_PATH}/zsh/aliases`; do
+    source ${CONFIG_PATH}/zsh/aliases/${item}
+done
+
+if [ -d "${HOME}/.zsh-config.d/aliases" ]; then
+    for item in `ls ${HOME}/.zsh-config.d/aliases`; do
+        source ${HOME}/.zsh-config.d/aliases/${item}
+    done
+fi
