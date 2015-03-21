@@ -8,13 +8,13 @@ alias clocksync="sudo ntpdate 0.pool.ntp.org"
 alias got="git"
 
 for item in `find ${CONFIG_PATH}/zsh/aliases -type f | sort`; do
-    source ${CONFIG_PATH}/zsh/aliases/${item}
+    source ${item}
 done
 
 if [ -d "${HOME}/.zsh-config.d/aliases" ]; then
     for item in `find ${HOME}/.zsh-config.d/aliases -type f | sort`; do
-        if [ -f ${HOME}/.zsh-config.d/aliases/${item} ]; then
-            source ${HOME}/.zsh-config.d/aliases/${item}
+        if [ -f ${item} ]; then
+            source ${item}
         fi
     done
 fi

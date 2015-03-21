@@ -6,5 +6,5 @@ if [ ! -d ${HOME}/.zsh-config.d/ ]; then
 fi
 
 for file in `find ${HOME}/.zsh-config.d/ -type f -depth 1 | sort`; do
-    source ${HOME}/.zsh-config.d/${file}
+    source ${file}
 done
