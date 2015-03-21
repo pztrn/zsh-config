@@ -63,7 +63,6 @@ function check_debug() {
     #   - 1: this debug level should not be printed.
     local DEBUG_LVL=$1
 
-
     if [ ${DEBUG_LVL} -le ${DEBUG} ]; then
         return 0
     else
