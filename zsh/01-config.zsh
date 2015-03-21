@@ -5,6 +5,6 @@ if [ ! -d ${HOME}/.zsh-config.d/ ]; then
     echo "Looks like it's a very first launch. So I've copied default config to '${HOME}/.zsh-config.d/'"
 fi
 
-for file in `ls ${HOME}/.zsh-config.d/ | sort`; do
+for file in `find ${HOME}/.zsh-config.d/ -type f -depth 1 | sort`; do
     source ${HOME}/.zsh-config.d/${file}
 done
