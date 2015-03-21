@@ -13,6 +13,8 @@ done
 
 if [ -d "${HOME}/.zsh-config.d/aliases" ]; then
     for item in `ls ${HOME}/.zsh-config.d/aliases`; do
-        source ${HOME}/.zsh-config.d/aliases/${item}
+        if [ -f ${HOME}/.zsh-config.d/aliases/${item} ]; then
+            source ${HOME}/.zsh-config.d/aliases/${item}
+        fi
     done
 fi

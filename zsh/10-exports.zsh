@@ -3,6 +3,8 @@ for config_file in `ls ${CONFIG_PATH}/zsh/exports | sort`; do
 done
 
 for config_file in `ls ${HOME}/.zsh-config.d/exports | sort`; do
-    source ${HOME}/.zsh-config.d/exports/${config_file}
+    if [ -f ${HOME}/.zsh-config.d/exports/${config_file} ]; then
+        source ${HOME}/.zsh-config.d/exports/${config_file}
+    fi
 done
 
