@@ -6,7 +6,7 @@ done
 # We should import user-specific exports and use them.
 if [ -d ${HOME}/.zsh-config.d/exports ]; then
     for config_file in `find ${HOME}/.zsh-config.d/exports -type f -exec basename {} \; | sort`; do
-        if [ -f ${config_file} ]; then
+        if [ -f "${HOME}/.zsh-config.d/exports/${config_file}" ]; then
             source "${HOME}/.zsh-config.d/exports/${config_file}"
         fi
     done
