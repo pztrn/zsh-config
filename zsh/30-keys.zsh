@@ -85,8 +85,12 @@ case "${TERM}" in
         bindkey '\e[H'    beginning-of-line   # home
         bindkey '\e[F'    end-of-line         # end
         bindkey '\e[3~'   delete-char         # delete
-        bindkey '\e[1;5C' forward-word        # ctrl right
-        bindkey '\e[1;5D' backward-word       # ctrl left
+        #bindkey '\e[1;5C' forward-word        # ctrl right
+        #bindkey '\e[1;5D' backward-word       # ctrl left
+        bindkey '^[[C' forward-word        # ctrl right
+        bindkey '^[[D' backward-word       # ctrl left
+        bindkey 'OC' forward-word        # ctrl right
+        bindkey 'OD' backward-word       # ctrl left
         # workaround for screen + xterm
         bindkey '\e[1~'   beginning-of-line   # home
         bindkey '\e[4~'   end-of-line         # end
