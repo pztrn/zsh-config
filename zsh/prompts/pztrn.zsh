@@ -16,8 +16,6 @@ prompt_pztrn_setup () {
 
     local p_date p_tty p_plat p_userpwd p_shlvlhist p_rc p_end p_win p_path
 
-    autoload -U colors
-    colors
 
     # Session-dependend colorizing.
     # Local will be black, remote - yellow.
