@@ -69,7 +69,7 @@ function gitinfo_get_branch()
         GITINFO_BRANCH=""
         return 1
     fi
-    GITINFO_BRANCH=`git branch | cut -d " " -f 2`
+    GITINFO_BRANCH=`git branch | grep "*" | cut -d " " -f 2`
 }
 
 ######################################################################
