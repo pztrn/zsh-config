@@ -1,6 +1,11 @@
 # pztrn prompt theme
 autoload -U add-zsh-hook
 
+# Common vars array.
+declare -A vars
+# Prompt parts.
+declare p_date p_tty p_plat p_userpwd p_shlvlhist p_rc p_end p_win p_path p_gitinfo
+
 prompt_pztrn_help () {
     cat <<'EOF'
 
@@ -12,10 +17,8 @@ EOF
 }
 
 prompt_pztrn_setup () {
-    local -A vars
-
-    local p_date p_tty p_plat p_userpwd p_shlvlhist p_rc p_end p_win p_path
-
+    emulate -L zsh
+    precmd_functions=(${precmd_functions[@]} "prompt_pztrn_gitinfo" "prompt_pztrn_createprompt")
 
     # Session-dependend colorizing.
     # Local will be black, remote - yellow.
@@ -51,9 +54,11 @@ prompt_pztrn_setup () {
 
     p_path="$vars['brackets_start']$vars['default_color'] %d $vars['brackets_end']"
 
-    PROMPT="$p_date$p_tty$p_plat$p_userpwd$p_shlvlhist$p_rc
+    # Initial prompt creation. On every cd it will be recreated with
+    # prompt_pztrn_createprompt function.
+    PROMPT="$p_date$p_tty$p_plat$p_userpwd$p_shlvlhist$p_rc$p_gitinfo
 $vars['console']$p_path $p_end"
-    RPROMPT="$p_date$p_tty$p_plat$p_userpwd$p_shlvlhist$p_rc
+    RPROMPT="$p_date$p_tty$p_plat$p_userpwd$p_shlvlhist$p_rc$p_gitinfo
 $vars['console']$p_path $p_end"
     PS2='%(4_.\.)%3_> %E'
 
@@ -61,6 +66,34 @@ $vars['console']$p_path $p_end"
     logcheck=5
     WATCHFMT="$vars['default_color']%n$reset_color from $fg[magenta]%M$reset_color has $vars['default_color']%a$reset_color (%l) at %T %W"
 
+}
+
+prompt_pztrn_gitinfo()
+{
+    # Git repository information.
+    # Depends on 'gitinfo' application.
+    gitinfo_present=`declare -f gitinfo_check`
+    if [ $gitinfo_present ]; then
+        gitinfo_check
+        #echo $?
+        if [[ $? -eq 0 ]]; then
+            p_gitinfo_branch="$vars['brackets_start']$vars['usercolor']${GITINFO_BRANCH}$reset_color$vars['brackets_end']"
+            p_gitinfo_commit="$vars['brackets_start']%{$fg[magenta]%}${GITINFO_COMMIT_SHORTID}$reset_color (%{$fg[cyan]%}${GITINFO_COMMIT_COUNT}$reset_color)$vars['brackets_end']"
+            p_gitinfo_remotes="$vars['brackets_start']%{$fg[green]%}${GITINFO_REMOTES} remote(s)$reset_color$vars['brackets_end']"
+            p_gitinfo_files="$vars['brackets_start']%{$fg[green]%}${GITINFO_NEW_FILES}$reset_color new, %{$fg[yellow]%}${GITINFO_MODIFIED_FILES}$reset_color modified$vars['brackets_end']"
+            p_gitinfo=$'\n'"$p_gitinfo_branch$p_gitinfo_commit$p_gitinfo_files$p_gitinfo_remotes"
+        else
+            p_gitinfo=""
+        fi
+    fi
+}
+
+prompt_pztrn_createprompt()
+{
+    PROMPT="$p_date$p_tty$p_plat$p_userpwd$p_shlvlhist$p_rc$p_gitinfo
+$vars['console']$p_path $p_end"
+    RPROMPT="$p_date$p_tty$p_plat$p_userpwd$p_shlvlhist$p_rc$p_gitinfo
+$vars['console']$p_path $p_end"
 }
 
 prompt_pztrn_setup
