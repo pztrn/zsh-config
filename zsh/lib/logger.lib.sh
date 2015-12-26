@@ -17,6 +17,18 @@ function log() {
     fi
 }
 
+# We are defaulting our DEBUG level to 0.
+# This value can be overriden with prepending "DEBUG=1" while launching
+# this script.
+# DEBUG_LEVEL will be taken from configuration.
+if [ -z ${DEBUG_LEVEL} ]; then
+    DEBUG_LEVEL=0
+fi
+
+if [ -z ${DEBUG} ]; then
+    DEBUG=0
+fi
+
 function log_common() {
     # Executes some common things for logs.
     local DEBUG_LVL=$1
