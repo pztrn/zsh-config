@@ -64,7 +64,7 @@ $vars['console']$p_path $p_end"
 
     watch=all
     logcheck=5
-    WATCHFMT="$vars['default_color']%n$reset_color from $fg[magenta]%M$reset_color has $vars['default_color']%a$reset_color (%l) at %T %W"
+    WATCHFMT="$fg[green]%n$reset_color from $fg[magenta]%M$reset_color has $fg[green]%a$reset_color (%l) at %T %W"
 
 }
 
