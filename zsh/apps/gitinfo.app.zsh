@@ -12,8 +12,8 @@ GITINFO_STASHES_COUNT=0
 ######################################################################
 function gitinfo()
 {
-    curdir=`pwd`
-    if [ ! -d "${curdir}/.git" ]; then
+    gitinfo_internal_checks
+    if [ $? -eq 1 ]; then
         echo "This is not a git repository."
         return 1
     fi
@@ -54,7 +54,13 @@ function gitinfo_chpwd()
 function gitinfo_check()
 {
     curdir=`pwd`
+
     if [ "${#GITINFO_BRANCH}" -eq 0 ]; then
+        return 1
+    fi
+
+    objects=`ls .git/objects | grep -v "info\|pack" | wc -l`
+    if [ ${objects} -lt 1 ]; then
         return 1
     fi
 }
@@ -64,8 +70,8 @@ function gitinfo_check()
 ######################################################################
 function gitinfo_get_branch()
 {
-    curdir=`pwd`
-    if [ ! -d "${curdir}/.git" ]; then
+    gitinfo_internal_checks
+    if [ $? -eq 1 ]; then
         GITINFO_BRANCH=""
         return 1
     fi
@@ -77,8 +83,8 @@ function gitinfo_get_branch()
 ######################################################################
 function gitinfo_get_changes()
 {
-    curdir=`pwd`
-    if [ ! -d "${curdir}/.git" ]; then
+    gitinfo_internal_checks
+    if [ $? -eq 1 ]; then
         GITINFO_NEW_FILES=""
         GITINFO_MODIFIED_FILES=""
         return 1
@@ -93,8 +99,8 @@ function gitinfo_get_changes()
 ######################################################################
 function gitinfo_get_commit_data()
 {
-    curdir=`pwd`
-    if [ ! -d "${curdir}/.git" ]; then
+    gitinfo_internal_checks
+    if [ $? -eq 1 ]; then
         GITINFO_COMMIT_SHORTID=""
         GITINFO_COMMIT_ID=""
         GITINFO_COMMIT_COUNT=""
@@ -110,8 +116,8 @@ function gitinfo_get_commit_data()
 ######################################################################
 function gitinfo_get_remotes()
 {
-    curdir=`pwd`
-    if [ ! -d "${curdir}/.git" ]; then
+    gitinfo_internal_checks
+    if [ $? -eq 1 ]; then
         GITINFO_REMOTES=""
         return 1
     fi
@@ -123,10 +129,23 @@ function gitinfo_get_remotes()
 ######################################################################
 function gitinfo_get_stashes()
 {
+
+    GITINFO_STASHES_COUNT=$(git stash list 2>/dev/null | wc -l)
+}
+
+######################################################################
+# Some common checks that is used everywhere.
+######################################################################
+function gitinfo_internal_checks()
+{
     curdir=`pwd`
     if [ ! -d "${curdir}/.git" ]; then
         GITINFO_STASHES_COUNT=""
         return 1
     fi
-    GITINFO_STASHES_COUNT=$(git stash list 2>/dev/null | wc -l)
+
+    objects=`ls .git/objects | grep -v "info\|pack" | wc -l`
+    if [ ${objects} -lt 1 ]; then
+        return 1
+    fi
 }
