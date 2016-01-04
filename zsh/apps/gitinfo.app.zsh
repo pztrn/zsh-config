@@ -4,6 +4,7 @@ GITINFO_COMMIT_SHORTID=""
 GITINFO_COMMIT_COUNT=0
 GITINFO_NEW_FILES=""
 GITINFO_MODIFIED_FILES=""
+GITINFO_DELETED_FILES=""
 GITINFO_REMOTES=""
 GITINFO_STASHES_COUNT=0
 
@@ -87,10 +88,12 @@ function gitinfo_get_changes()
     if [ $? -eq 1 ]; then
         GITINFO_NEW_FILES=""
         GITINFO_MODIFIED_FILES=""
+        GITINFO_DELETED_FILES=""
         return 1
     fi
     GITINFO_NEW_FILES=`LC_ALL=C git status | grep "new" | wc -l`
     GITINFO_MODIFIED_FILES=`LC_ALL=C git status | grep "modified" | wc -l`
+    GITINFO_DELETED_FILES=`LC_ALL=C git status | grep "deleted" | wc -l`
 }
 
 ######################################################################
