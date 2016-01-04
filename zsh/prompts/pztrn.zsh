@@ -77,10 +77,11 @@ prompt_pztrn_gitinfo()
         gitinfo_check
         #echo $?
         if [[ $? -eq 0 ]]; then
+            gitinfo_get_info
             p_gitinfo_branch="$vars['brackets_start']$vars['usercolor']${GITINFO_BRANCH}$reset_color$vars['brackets_end']"
             p_gitinfo_commit="$vars['brackets_start']%{$fg[magenta]%}${GITINFO_COMMIT_SHORTID}$reset_color (%{$fg[cyan]%}${GITINFO_COMMIT_COUNT}$reset_color)$vars['brackets_end']"
             p_gitinfo_remotes="$vars['brackets_start']%{$fg[green]%}${GITINFO_REMOTES} remote(s)$reset_color$vars['brackets_end']"
-            p_gitinfo_files="$vars['brackets_start']%{$fg[green]%}${GITINFO_NEW_FILES}$reset_color new, %{$fg[yellow]%}${GITINFO_MODIFIED_FILES}$reset_color modified, %{$fg[red]%}${GITINFO_DELETED_FILES} deleted$vars['brackets_end']"
+            p_gitinfo_files="$vars['brackets_start']%{$fg[green]%}${GITINFO_NEW_FILES}$reset_color new, %{$fg[yellow]%}${GITINFO_MODIFIED_FILES}$reset_color modified, %{$fg[red]%}${GITINFO_DELETED_FILES}$reset_color deleted, %{$fg[gray]%}${GITINFO_UNTRACKED_COUNT}$reset_color untracked$vars['brackets_end']"
             p_gitinfo=$'\n'"$p_gitinfo_branch$p_gitinfo_commit$p_gitinfo_files$p_gitinfo_remotes"
         else
             p_gitinfo=""
