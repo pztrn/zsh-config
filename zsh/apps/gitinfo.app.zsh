@@ -92,9 +92,9 @@ function gitinfo_get_branch()
 ######################################################################
 function gitinfo_get_changes()
 {
-    GITINFO_NEW_FILES=`LC_ALL=C git status | grep "new" | wc -l`
-    GITINFO_MODIFIED_FILES=`LC_ALL=C git status | grep "modified" | wc -l`
-    GITINFO_DELETED_FILES=`LC_ALL=C git status | grep "deleted" | wc -l`
+    GITINFO_NEW_FILES=`LC_ALL=C git status | grep "new" | wc -l | sed "s/ //g"`
+    GITINFO_MODIFIED_FILES=`LC_ALL=C git status | grep "modified" | wc -l | sed "s/ //g"`
+    GITINFO_DELETED_FILES=`LC_ALL=C git status | grep "deleted" | wc -l | sed "s/ //g"`
 }
 
 ######################################################################
@@ -103,9 +103,9 @@ function gitinfo_get_changes()
 ######################################################################
 function gitinfo_get_commit_data()
 {
-    GITINFO_COMMIT_SHORTID=`git rev-parse --short HEAD`
-    GITINFO_COMMIT_ID=`git log | head -n 1 | cut -d " " -f 2`
-    GITINFO_COMMIT_COUNT=`git log | grep "commit " | wc -l`
+    GITINFO_COMMIT_SHORTID=`git rev-parse --short HEAD | sed "s/ //g"`
+    GITINFO_COMMIT_ID=`git log | head -n 1 | cut -d " " -f 2 | sed "s/ //g"`
+    GITINFO_COMMIT_COUNT=`git log | grep "commit " | wc -l | sed "s/ //g"`
 }
 
 ######################################################################
@@ -142,7 +142,7 @@ function gitinfo_get_info()
 ######################################################################
 function gitinfo_get_remotes()
 {
-    GITINFO_REMOTES=$(git remote -v | awk {' print $2 '} | uniq | wc -l)
+    GITINFO_REMOTES=$(git remote -v | awk {' print $2 '} | uniq | wc -l | sed "s/ //g")
 }
 
 ######################################################################
@@ -150,7 +150,7 @@ function gitinfo_get_remotes()
 ######################################################################
 function gitinfo_get_stashes()
 {
-    GITINFO_STASHES_COUNT=`git stash list 2>/dev/null | wc -l`
+    GITINFO_STASHES_COUNT=`git stash list 2>/dev/null | wc -l | sed "s/ //g"`
 }
 
 ######################################################################
@@ -158,7 +158,7 @@ function gitinfo_get_stashes()
 ######################################################################
 function gitinfo_get_untracked()
 {
-    GITINFO_UNTRACKED_COUNT=`LC_ALL=C git status | grep -v "be\ committed\|On\ branch\|nothing\ added\|Untracked\ files\|git\ add\|Your\ branch\|new\ file\|git\ reset\|nothing\ to\ commit\|not\ staged\|git\ checkout\|modified\:" | sed '/^$/d' | wc -l`
+    GITINFO_UNTRACKED_COUNT=`LC_ALL=C git status | grep -v "be\ committed\|On\ branch\|nothing\ added\|Untracked\ files\|git\ add\|Your\ branch\|new\ file\|git\ reset\|nothing\ to\ commit\|not\ staged\|git\ checkout\|modified\:" | sed '/^$/d' | wc -l | sed "s/ //g"`
 
 }
 
@@ -172,7 +172,7 @@ function gitinfo_internal_checks()
     fi
 
     if [ ${#GITINFO_TOPLEVEL_DIR} -ne 0 ]; then
-        objects=`ls ${GITINFO_TOPLEVEL_DIR}/.git/objects | grep -v "info\|pack" | wc -l`
+        objects=`ls ${GITINFO_TOPLEVEL_DIR}/.git/objects | grep -v "info\|index" | wc -l`
         if [ ${objects} -lt 1 ]; then
             return 1
         fi
