@@ -46,7 +46,8 @@ prompt_pztrn_setup () {
         vars['usercolor']="%{$fg[blue]%}"
     fi
 
-    p_userpwd="$vars['brackets_start']$vars['usercolor']%n$reset_color@%{$fg[magenta]%}%M$vars['brackets_end']"
+    p_hostname=$(hostname -f)
+    p_userpwd="$vars['brackets_start']$vars['usercolor']%n$reset_color@%{$fg[magenta]%}$p_hostname$vars['brackets_end']"
 
     p_shlvlhist="$vars['brackets_start']$vars['default_color']%B%h%b$vars['brackets_end']"
     p_rc="%(?..$vars['brackets_start']$fg[red]%?%1v$vars['brackets_end'])"
