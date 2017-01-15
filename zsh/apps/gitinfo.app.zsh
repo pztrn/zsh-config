@@ -103,9 +103,9 @@ function gitinfo_get_changes()
 ######################################################################
 function gitinfo_get_commit_data()
 {
-    GITINFO_COMMIT_SHORTID=`git rev-parse --short HEAD | sed "s/ //g"`
-    GITINFO_COMMIT_ID=`git log | head -n 1 | cut -d " " -f 2 | sed "s/ //g"`
-    GITINFO_COMMIT_COUNT=`git log | grep "commit " | wc -l | sed "s/ //g"`
+    GITINFO_COMMIT_SHORTID=`git rev-parse --short HEAD 2>/dev/null | sed "s/ //g"`
+    GITINFO_COMMIT_ID=`git log 2>/dev/null | head -n 1 | cut -d " " -f 2 | sed "s/ //g"`
+    GITINFO_COMMIT_COUNT=`git log 2>/dev/null | grep "commit " | wc -l | sed "s/ //g"`
 }
 
 ######################################################################
