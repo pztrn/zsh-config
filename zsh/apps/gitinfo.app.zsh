@@ -26,7 +26,6 @@ function gitinfo()
 
     gitinfo_get_info
 
-    gitinfo_check
     if [ $? -eq 0 ]; then
         echo "Git repository information:"
         echo "======================================================================"
@@ -61,22 +60,10 @@ function gitinfo_check()
     GITINFO_TOPLEVEL_DIR=`git rev-parse --show-toplevel 2>/dev/null`
     if [ $? -ne 0 ]; then
         GITINFO_TOPLEVEL_DIR=""
+        log 1 "Failed to get git toplevel directory! (command 'git rev-parse --show-toplevel 2>/dev/null' failed)"
         return 1
     fi
-
-    if [ "${curdir/${GITINFO_TOPLEVEL_DIR}}" != "${curdir}" ]; then
-        GITINFO_RECHECK=1
-        gitinfo_internal_checks
-
-        if [ $? -eq 0 ]; then
-            return 0
-        else
-            return 1
-        fi
-    else
-        GITINFO_RECHECK=0
-        return 1
-    fi
+    log 1 "Git top directory: ${GITINFO_TOPLEVEL_DIR}"
 }
 
 ######################################################################
@@ -168,15 +155,18 @@ function gitinfo_get_untracked()
 function gitinfo_internal_checks()
 {
     if [ ${GITINFO_RECHECK} -eq 0 ]; then
+    error 1 "gitinfo_internal_checks() called without GITINFO_RECHECK=1, aborting"
         return 1
     fi
 
     if [ ${#GITINFO_TOPLEVEL_DIR} -ne 0 ]; then
         objects=`ls ${GITINFO_TOPLEVEL_DIR}/.git/objects | grep -v "info\|index" | wc -l`
         if [ ${objects} -lt 1 ]; then
+            error 1 "Failed to get git objects directory members count!"
             return 1
         fi
     else
+        log 1 "GITINFO_TOPLEVEL_DIR isn't specified."
         return 1
     fi
 

@@ -78,7 +78,6 @@ prompt_pztrn_gitinfo()
         gitinfo_check
         #echo $?
         if [[ $? -eq 0 ]]; then
-            gitinfo_get_info
             p_gitinfo_branch="$vars['brackets_start']$vars['usercolor']${GITINFO_BRANCH}$reset_color$vars['brackets_end']"
             p_gitinfo_commit="$vars['brackets_start']%{$fg[magenta]%}${GITINFO_COMMIT_SHORTID}$reset_color (%{$fg[cyan]%}${GITINFO_COMMIT_COUNT}$reset_color)$vars['brackets_end']"
             p_gitinfo_remotes="$vars['brackets_start']%{$fg[green]%}${GITINFO_REMOTES} remote(s)$reset_color$vars['brackets_end']"
