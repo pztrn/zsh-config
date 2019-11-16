@@ -27,7 +27,7 @@ fi
 source ${CONFIG_PATH}/zsh/lib/logger.lib.sh
 
 if [ $CONFIG_FOUND -eq 1 ]; then
-    for config_file in `ls ${CONFIG_PATH}/zsh/ | sort | grep zsh`; do
+    for config_file in `ls --color=never ${CONFIG_PATH}/zsh/ | sort | grep zsh`; do
         source ${CONFIG_PATH}/zsh/${config_file}
     done
 else
