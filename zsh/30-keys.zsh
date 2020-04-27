@@ -71,10 +71,11 @@ case "${TERM}" in
         bindkey '[C'      emacs-forward-word  # esc right
     ;;
     *rxvt*) # rxvt derivatives
-        bindkey '\eOc'      forward-word        # ctrl right
-        bindkey '\eOd'      backward-word       # ctrl left
-        bindkey '\e\e[D'   backward-word ### Alt left
-        bindkey '\e\e[C'  forward-word ### Alt right
+        bindkey '\eOc'    forward-word        # ctrl right
+        bindkey '\eOd'    backward-word       # ctrl left
+        bindkey '\e\e[D'  backward-word     ### Alt left
+        bindkey '\e\e[C'  forward-word      ### Alt right
+
         # workaround for screen + urxvt
         bindkey '\e[7~'   beginning-of-line   # home
         bindkey '\e[8~'   end-of-line         # end
@@ -85,10 +86,10 @@ case "${TERM}" in
         bindkey '\e[H'    beginning-of-line   # home
         bindkey '\e[F'    end-of-line         # end
         bindkey '\e[3~'   delete-char         # delete
-        bindkey '^[[C' forward-word        # ctrl right
-        bindkey '^[[D' backward-word       # ctrl left
-        bindkey 'OC' forward-word        # ctrl right
-        bindkey 'OD' backward-word       # ctrl left
+        bindkey '^[[C'    forward-word        # ctrl right
+        bindkey '^[[D'    backward-word       # ctrl left
+        bindkey '\eOC'    forward-word        # ctrl right
+        bindkey '\eOD'    backward-word       # ctrl left
         bindkey '^[[1;3C' forward-word        # alt right
         bindkey '^[[1;3D' backward-word       # alt left
         # workaround for screen + xterm
