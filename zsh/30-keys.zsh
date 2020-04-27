@@ -88,8 +88,8 @@ case "${TERM}" in
         bindkey '\e[3~'   delete-char         # delete
         bindkey '^[[C'    forward-word        # ctrl right
         bindkey '^[[D'    backward-word       # ctrl left
-        bindkey '\eOC'    forward-word        # ctrl right
-        bindkey '\eOD'    backward-word       # ctrl left
+#       bindkey '\eOC'    forward-word        # ctrl right
+#       bindkey '\eOD'    backward-word       # ctrl left
         bindkey '^[[1;3C' forward-word        # alt right
         bindkey '^[[1;3D' backward-word       # alt left
         # workaround for screen + xterm
