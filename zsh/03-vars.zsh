@@ -4,6 +4,15 @@
 OS=`uname`
 OS_RELEASE=`uname -r`
 
+# Distro detection.
+LSBRELEASE=$(which lsb_release)
+if [ $? -eq 0 ]; then
+  DISTRO=`lsb_release -i -s`
+else
+  # BSDs OS and macOS can be detected via uname.
+  DISTRO=${OS}
+fi
+
 # Variable forcers.
 
 # If DEBUG isn't defined - force it to be 0.
