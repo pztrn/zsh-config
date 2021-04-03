@@ -1,5 +1,9 @@
 # Load enabled apps.
 for app in ${ENABLED_APPS[@]}; do
+    if [ "${app}" = "" ]; then
+      continue
+    fi
+
     if [ ! -f "${CONFIG_PATH}/zsh/apps/${app}.app.zsh" ]; then
         error 0 "Application '${app}' doesn't exist"
     else

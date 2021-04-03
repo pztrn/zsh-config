@@ -1,5 +1,9 @@
 # Load enabled plugins.
 for plugin in "${ENABLED_PLUGINS[@]}"; do
+    if [ "${plugin}" = "" ]; then
+      continue
+    fi
+
     if [ ! -f "${CONFIG_PATH}/zsh/plugins/${plugin}.plugin.zsh" ]; then
         error 0 "Plugin '${plugin}' doesn't exist"
     else
