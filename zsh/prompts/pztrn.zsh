@@ -28,8 +28,8 @@ prompt_pztrn_setup () {
         vars['console']="$vars['brackets_start']SSH$vars['brackets_end']"
         vars['default_color']="%{$fg[cyan]%}"
     else
-        vars['brackets_start']="%{$fg[black]%}[%{$reset_color%}"
-        vars['brackets_end']="%{$fg[black]%}]%{$reset_color%}"
+        vars['brackets_start']="%{$reset_color%}%{$fg[gray]%}[%{$reset_color%}"
+        vars['brackets_end']="%{$reset_color%}%{$fg[gray]%}]%{$reset_color%}"
         vars['console']=""
         vars['default_color']="%{$fg[green]%}"
     fi
