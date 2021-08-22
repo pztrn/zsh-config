@@ -3,6 +3,7 @@
 
 OS=`uname`
 OS_RELEASE=`uname -r`
+OS_ARCH=`uname -m`
 
 # Distro detection.
 LSBRELEASE=$(which lsb_release)

@@ -96,7 +96,7 @@ case "${TERM}" in
         bindkey '\e[1~'   beginning-of-line   # home
         bindkey '\e[4~'   end-of-line         # end
     ;;
-    screen)
+    screen*)
         bindkey '^[[1~'   beginning-of-line   # home
         bindkey '^[[4~'   end-of-line         # end
         bindkey '\e[3~'   delete-char         # delete
@@ -104,5 +104,7 @@ case "${TERM}" in
         bindkey '\eOd'    backward-word       # ctrl left
         bindkey '^[[1;5C' forward-word        # ctrl right
         bindkey '^[[1;5D' backward-word       # ctrl left
+        bindkey '^[[1;3C' forward-word        # alt right
+        bindkey '^[[1;3D' backward-word       # alt left
     ;;
 esac

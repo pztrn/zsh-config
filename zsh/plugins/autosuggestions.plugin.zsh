@@ -2,7 +2,8 @@ AUTOSUGGESTIONS_PATH=""
 
 if [ "${DISTRO}" = "Arch" ]; then AUTOSUGGESTIONS_PATH="/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"; fi
 if [ "${DISTRO}" = "Debian" ]; then AUTOSUGGESTIONS_PATH="/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh"; fi
-if [ "${DISTRO}" = "Darwin" ]; then AUTOSUGGESTIONS_PATH="/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh"; fi
+if [ "${DISTRO}" = "Darwin" -a "${OS_ARCH}" == "arm64" ]; then AUTOSUGGESTIONS_PATH="/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh"; fi
+if [ "${DISTRO}" = "Darwin" -a "${OS_ARCH}" == "x86_64" ]; then AUTOSUGGESTIONS_PATH="/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh"; fi
 if [ "${DISTRO}" = "Ubuntu" ]; then AUTOSUGGESTIONS_PATH="/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh"; fi
 if [ "${DISTRO}" = "VoidLinux" ]; then AUTOSUGGESTIONS_PATH="/usr/share/zsh/plugins/zsh-autosuggestions.zsh"; fi
 
