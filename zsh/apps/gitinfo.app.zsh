@@ -145,7 +145,7 @@ function gitinfo_get_stashes()
 ######################################################################
 function gitinfo_get_untracked()
 {
-    GITINFO_UNTRACKED_COUNT=`LC_ALL=C git status | grep -v "be\ committed\|On\ branch\|nothing\ added\|Untracked\ files\|git\ add\|Your\ branch\|new\ file\|git\ reset\|nothing\ to\ commit\|not\ staged\|git\ checkout\|modified\:" | sed '/^$/d' | wc -l | sed "s/ //g"`
+    GITINFO_UNTRACKED_COUNT=`LC_ALL=C git status | grep -v "be committed|On branch|nothing added|Untracked files|git add|Your branch|new file|git reset|nothing to commit|not staged|git checkout|modified:" | sed '/^$/d' | wc -l | sed "s/ //g"`
 
 }
 
