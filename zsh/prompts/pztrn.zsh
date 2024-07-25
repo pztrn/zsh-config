@@ -21,11 +21,16 @@ prompt_pztrn_setup () {
     precmd_functions=(${precmd_functions[@]} "prompt_pztrn_gitinfo" "prompt_pztrn_createprompt")
 
     # Session-dependend colorizing.
-    # Local will be black, remote - yellow.
+    # Local will be black, remote and containers - yellow.
     if [[ -n $SSH_TTY ]]; then
         vars['brackets_start']="%{$fg[yellow]%}[%{$reset_color%}"
         vars['brackets_end']="%{$fg[yellow]%}]%{$reset_color%}"
         vars['console']="$vars['brackets_start']SSH$vars['brackets_end']"
+        vars['default_color']="%{$fg[cyan]%}"
+    elif test -e /run/.containerenv -o -e /.dockerenv; then
+        vars['brackets_start']="%{$fg[yellow]%}[%{$reset_color%}"
+        vars['brackets_end']="%{$fg[yellow]%}]%{$reset_color%}"
+        vars['console']="$vars['brackets_start']📦$vars['brackets_end']"
         vars['default_color']="%{$fg[cyan]%}"
     else
         vars['brackets_start']="%{$reset_color%}%{$fg[gray]%}[%{$reset_color%}"

@@ -23,9 +23,12 @@ prompt_fat0troll_setup () {
     vars['brackets_end']="%{$fg[yellow]%}]%{$reset_color%}"
 
     # Session-dependend colorizing.
-    # Local will be black, remote - yellow.
+    # Local will be black, remote and containers - yellow.
     if [[ -n $SSH_TTY ]]; then
         vars['console']="$vars['brackets_start']SSH$vars['brackets_end']"
+        vars['default_color']="%{$fg[cyan]%}"
+    elif test -e /run/.containerenv -o -e /.dockerenv; then
+        vars['console']="$vars['brackets_start']📦$vars['brackets_end']"
         vars['default_color']="%{$fg[cyan]%}"
     else
         vars['console']=""
